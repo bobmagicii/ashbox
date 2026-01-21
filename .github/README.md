@@ -19,6 +19,8 @@ bash ashbox.sh install ssl@my-web-company.tld
 # Issue New Cert
 
 > `bash ashbox.sh issue domain.tld`
+> `bash ashbox.sh issue domain1.tld domain2.tld`
+> `bash ashbox.sh issue domain.tld *.domain.tld`
 
 # Remove Existing Cert
 
