@@ -14,16 +14,22 @@ bash ashbox.sh install ssl@my-web-company.tld
 
 # List Tracked Certs
 
-> `bash ashbox.sh list`
+`bash ashbox.sh list`
 
 # Issue New Cert
 
-> `bash ashbox.sh issue domain.tld`
+Single domain.
 
-> `bash ashbox.sh issue domain1.tld domain2.tld`
+`bash ashbox.sh issue domain.tld`
 
-> `bash ashbox.sh issue domain.tld *.domain.tld`
+Multiple domains.
+
+`bash ashbox.sh issue domain1.tld domain2.tld`
+
+Wildcard certs.
+
+`bash ashbox.sh issue domain.tld *.domain.tld`
 
 # Remove Existing Cert
 
-> `bash ashbox.sh remove domain.tld`
+`bash ashbox.sh remove domain.tld`
