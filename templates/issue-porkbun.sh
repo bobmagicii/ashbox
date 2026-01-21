@@ -11,4 +11,4 @@ export DOMAIN=""
 export PORKBUN_API_KEY=""
 export PORKBUN_SECRET_API_KEY=""
 
-$ACMESH --issue --dns dns_porkbun -d $DOMAIN
+$ACMESH --issue --dns dns_porkbun -d $1

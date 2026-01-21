@@ -6,10 +6,11 @@
 ################################################################################
 ################################################################################
 
-export InstDir="/opt/acmesh"
-export TempDir="/tmp/acmesh"
-export ConfDir="$InstDir/local/confs"
-export CertDir="$InstDir/local/certs"
+export BaseDir=`pwd`
+export TempDir="/tmp/ashbox"
+export InstDir="$BaseDir/.ash"
+export ConfDir="$BaseDir/.cfg"
+export CertDir="$BaseDir/certs"
 
 export RepoURL="https://github.com/acmesh-official/acme.sh"
 
@@ -19,14 +20,13 @@ export RepoURL="https://github.com/acmesh-official/acme.sh"
 # after acme.sh does its job then my apache configurations tend to look like
 # this here.
 
-# SSLCertificateFile    "/opt/acmesh/local/certs/$SSLDomain_ecc/$SSLDomain.cer"
-# SSLCertificateKeyFile "/opt/acmesh/local/certs/$SSLDomain_ecc/$SSLDomain.key"
-# SSLCACertificateFile  "/opt/acmesh/local/certs/$SSLDomain_ecc/ca.cer"
+# SSLCertificateFile    "/opt/ashbox/certs/$SSLDomain_ecc/$SSLDomain.cer"
+# SSLCertificateKeyFile "/opt/ashbox/certs/$SSLDomain_ecc/$SSLDomain.key"
+# SSLCACertificateFile  "/opt/ashbox/certs/$SSLDomain_ecc/ca.cer"
 
 ################################################################################
 ################################################################################
 
-OriginDir=`pwd`
 ContactEmail=$1
 
 ShowUsageInfo() {
@@ -43,11 +43,16 @@ then
 	exit 1
 fi
 
-if [ -d $InstDir ];
-then
-	echo "there appears an install already at $InstDir"
-	exit 2
-fi
+#if [ -d $InstDir ];
+#then
+#	echo "there appears an install already at $InstDir"
+#	exit 2
+#fi
+
+echo " * BaseDir: $BaseDir"
+echo " * InstDir: $InstDir"
+echo " * ConfDir: $ConfDir"
+echo " * CertDir: $CertDir"
 
 ################################################################################
 ################################################################################
@@ -62,12 +67,12 @@ git clone $RepoURL $TempDir
 # run its installer with the config.
 
 cd $TempDir
-bash ./acme.sh --install $OptInstall -m $ContactEmail
-bash ./acme.sh --set-default-ca --server letsencrypt
+bash ./acme.sh $OptInstall --install -m $ContactEmail
+bash $InstDir/acme.sh $OptInstall --set-default-ca --server letsencrypt
 
 # cleanup the install.
 
-cd $OriginDir
+cd $BaseDir
 rm -rf $TempDir
 
 exit 0
