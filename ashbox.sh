@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 ################################################################################
 ################################################################################
@@ -8,6 +8,7 @@ TempDir="/tmp/ashbox"
 InstDir="$BaseDir/.ash"
 ConfDir="$BaseDir/.cfg"
 CertDir="$BaseDir/certs"
+HelpDir="$BaseDir/docs"
 
 RepoURL="https://github.com/acmesh-official/acme.sh"
 
@@ -22,10 +23,14 @@ ASHARG=${@: 2}
 ################################################################################
 ################################################################################
 
-ShowInstallInfo() {
-	echo "USAGE: $0 <ssl-contact-email>"
-	echo ""
+ShowHelpFile() {
+	echo
+	cat $HelpDir/$1
+	echo
 }
+
+################################################################################
+################################################################################
 
 CommandApacheConf() {
 
@@ -38,6 +43,7 @@ CommandApacheConf() {
 	echo
 	echo "VHOST SSL CONFIG"
 	echo "================"
+	echo
 	echo "SSLCertificateFile    ${CertDir}/${Domain}_eec/$Domain.cer"
 	echo "SSLCertificateKeyFile ${CertDir}/${Domain}_eec/$Domain.key"
 	echo "SSLCACertificateFile  ${CertDir}/${Domain}_eec/fullchain.cer"
@@ -54,7 +60,7 @@ CommandInstall() {
 
 	if [ -z "$ContactEmail" ];
 	then
-		ShowInstallInfo
+		ShowHelpFile ashbox-install.txt
 		exit 1
 	fi
 
@@ -84,44 +90,48 @@ CommandInstall() {
 CommandIssue() {
 
 	Domains=""
+	PArgs=""
 
 	########
 
-	for Domain do
-		Domains+="-d $Domain "
+	for Arg;
+	do
+		if [[ $Arg =~ \. ]];
+		then
+			Domains+="-d $Arg "
+		elif [[ $Arg == "--porkbun" ]];
+		then
+			PArgs+="--dns dns_porkbun"
+		else
+			PArgs+="$Arg "
+		fi
 	done
 
 	########
 
-	bash $ASHBIN $ASHCFG --issue --dns dns_porkbun $Domains
+	if [[ -z $Domains ]];
+	then
+		ShowHelpFile ashbox-issue.txt
+		exit 0
+	fi
+
+	########
+
+	echo $ASHBIN $ASHCFG --issue $PArgs $Domains
 	exit 0
 }
 
 CommandList() {
 
-	bash $ASHBIN $ASHCFG --list
+	echo
+	bash $ASHBIN $ASHCFG --list | tr -s " " ","
+	echo
+
 	exit 0
 }
 
 CommandHelp() {
-
-	echo
-	echo "* ashbox.sh issue <domain1> <...domain2> <...>"
-	echo "  Issue SSL certs for new domains."
-	echo
-	echo "* ashbox.sh remove <domain1> <...domain2> <...>"
-	echo "  Remove an SSL cert from the system."
-	echo
-	echo "* ashbox.sh list"
-	echo "  List all the domains tracked by acme.sh."
-	echo
-	echo "* ashbox.sh apacheconf <domain>"
-	echo "  Print the SSL config options for Apache configuration."
-	echo
-	echo "* ashbox.sh install"
-	echo "  Install acme.sh and configure within ashbox."
-	echo
-
+	ShowHelpFile ashbox.txt
 	exit 0
 }
 
@@ -135,9 +145,16 @@ CommandRemove() {
 		Domains+="-d $Domain "
 	done
 
+	if [[ -z $Domains ]];
+	then
+		ShowHelpFile ashbox-remove.txt
+		exit 0
+	fi
+
 	########
 
 	bash $ASHBIN $ASHCFG --revoke $Domains
+	bash $ASHBIN $ASHCFG --remove $Domains
 	exit 0
 }
 

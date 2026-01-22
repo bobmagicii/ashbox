@@ -1,43 +1,72 @@
-# ASHBOX
+# ashbox (acme.sh box)
 
 A box to keep and use acme.sh within. There are only a few things you ever
-need to do to manage certs for projects and this aims to make it just a little
-easier to deal with.
+need to do to manage certs for projects and this aims to make it just a little easier to deal with.
+
+* Installs, configures, and contains a managed acme.sh setup.
+* Simplify and centralise a portable certificate store.
+* Simplify interacting with the certificate system.
+* Simplify generating configuration for services (like Apache).
+
+*Note: Having experience with acme.sh before will be very helpful this project is not far enough along yet to fully abstract it from you.*
+
+
 
 # Install
 
-```shell
-git clone https://github.com/bobmagicii/ashbox
-cd ashbox
-bash ashbox.sh install ssl@my-web-company.tld
 ```
+$ git clone https://github.com/bobmagicii/ashbox
+$ cd ashbox
+$ chmod +x ./ashbox.sh
+```
+
+```
+$ ./ashbox.sh install ssl@my-web-company.tld
+```
+
+When it is done, a crontab entry will have been automatically created to handle the renewals of certificates. That can be verified by checking the output of `crontab -l` afterwards.
+
+
 
 # Config
 
 ### DNS API Keys
 
-Paste the variables into `account.conf`
+Each of the DNS supported by acme.sh have their variables you set to make their script work. Paste those variables into the `.cfg/account.conf` file.
 
-```shell
+> Example: to make --dns dns_porkbun work in acme.sh...
+```text
 PORKBUN_API_KEY='...'
 PORKBUN_SECRET_API_KEY='...'
 ```
 
+*Note: After the first time acme.sh uses them they will be renamed to be prefixed with SAVED_, acme.sh just does that for whatever reason*
+
+
+
 # Usage
 
-```text
-* bash ashbox.sh issue <domain1> <...domain2> <...>
-  Issue SSL certs for new domains.
+Call `ashbox.sh` with no arguments, or see the files within the `docs` directory for detailed usage help.
 
-* bash ashbox.sh remove <domain1> <...domain2> <...>
-  Remove an SSL cert from the system.
+### Quick Examples
 
-* bash ashbox.sh list
-  List all the domains tracked by acme.sh.
+> Issue and fetch a cert for the specified domain(s).
+```
+bash ashbox.sh issue domain.tld --dns dns_porkbun
+bash ashbox.sh issue domain.tld --porkbun
+```
 
-* bash ashbox.sh apacheconf <domain>
-  Print the SSL config options for Apache configuration.
+> List all the certificates tracked by this system.
+```
+bash ashbox.sh list
+```
 
-* bash ashbox.sh install
-  Install acme.sh and configure within ashbox.
+> Remove a certificate from the system.
+```
+bash ashbox.sh remove domain.tld
+```
+
+> Get the SSL configuration info for Apache configuration.
+```
+bash ashbox.sh apacheconf domain.tld
 ```

@@ -1,0 +1,20 @@
+ashbox.sh <command>...
+======================
+
+COMMANDS
+
+	list
+
+		Show all certs being tracked by acme.sh.
+
+	issue <...>
+
+		Fetch SSL certs for the specified domains. Use without any arguments to see full usage and options.
+
+	remove <...>
+
+		Remove specified certs from the system.
+
+	apacheconf <domain>
+
+		Print the SSL config used by Apache using the $SSLDomain placeholder or a specified domain.

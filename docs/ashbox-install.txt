@@ -1,0 +1,4 @@
+ashbox.sh install <ssl-notification-email>
+==========================================
+
+Install and configure acme.sh within this ashbox setup.

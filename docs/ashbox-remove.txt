@@ -1,0 +1,4 @@
+ashbox.sh remove <options> <domain1> ...
+=======================================
+
+Remove a specified certificates from the system.
