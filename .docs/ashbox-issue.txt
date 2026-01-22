@@ -12,3 +12,6 @@ Other DNS
 
 	--dns <whichever>
 	Pass the same value used by acme.sh to use other DNS.
+
+	acme.sh DNS Documentation:
+	https://github.com/acmesh-official/acme.sh/wiki/dnsapi
