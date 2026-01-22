@@ -7,8 +7,9 @@ BaseDir=`dirname "$(realpath $0)"`
 TempDir="/tmp/ashbox"
 InstDir="$BaseDir/.ash"
 ConfDir="$BaseDir/.cfg"
+HelpDir="$BaseDir/.docs"
 CertDir="$BaseDir/certs"
-HelpDir="$BaseDir/docs"
+
 
 RepoURL="https://github.com/acmesh-official/acme.sh"
 
@@ -16,7 +17,7 @@ RepoURL="https://github.com/acmesh-official/acme.sh"
 ################################################################################
 
 ASHBIN="$InstDir/acme.sh"
-ASHCFG="--home $InstDir --cert-home $CertDir --config-home $ConfDir"
+ASHCFG="--home \"$InstDir\" --cert-home \"$CertDir\" --config-home \"$ConfDir\""
 ASHCMD=$1
 ASHARG=${@: 2}
 
@@ -32,7 +33,11 @@ ShowHelpFile() {
 ################################################################################
 ################################################################################
 
-CommandApacheConf() {
+CommandConfigForAcmeSh() {
+	echo "$ASHCFG"
+}
+
+CommandConfigForApache() {
 
 	Domain=$1
 
@@ -177,9 +182,13 @@ elif [ "$ASHCMD" == 'install' ];
 then
 	CommandInstall $ASHARG
 
-elif [ "$ASHCMD" == 'apacheconf' ];
+elif [ "$ASHCMD" == 'conf:acmesh' ];
 then
-	CommandApacheConf $ASHARG
+	CommandConfigForAcmeSh $ASHARG
+
+elif [ "$ASHCMD" == 'conf:apache' ];
+then
+	CommandConfigForApache $ASHARG
 
 else
 	CommandHelp

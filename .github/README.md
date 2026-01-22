@@ -8,6 +8,13 @@ need to do to manage certs for projects and this aims to make it just a little e
 * Simplify interacting with the certificate system.
 * Simplify generating configuration for services (like Apache).
 
+
+
+# Requirements
+
+* Git
+* Bash
+
 *Note: Having experience with acme.sh before will be very helpful this project is not far enough along yet to fully abstract it from you.*
 
 
@@ -40,33 +47,54 @@ PORKBUN_API_KEY='...'
 PORKBUN_SECRET_API_KEY='...'
 ```
 
-*Note: After the first time acme.sh uses them they will be renamed to be prefixed with SAVED_, acme.sh just does that for whatever reason*
+*Note: After the first time acme.sh uses them they will be renamed to be prefixed with SAVED_, acme.sh just does that.*
 
 
 
 # Usage
 
-Call `ashbox.sh` with no arguments, or see the files within the `docs` directory for detailed usage help.
+Call `ashbox.sh` with no arguments, or see the files within the `.docs` directory for detailed usage help.
 
 ### Quick Examples
 
 > Issue and fetch a cert for the specified domain(s).
 ```
-bash ashbox.sh issue domain.tld --dns dns_porkbun
-bash ashbox.sh issue domain.tld --porkbun
+./ashbox.sh issue domain.tld --dns dns_porkbun
+./ashbox.sh issue domain.tld --porkbun
 ```
 
 > List all the certificates tracked by this system.
 ```
-bash ashbox.sh list
+./ashbox.sh list
 ```
 
 > Remove a certificate from the system.
 ```
-bash ashbox.sh remove domain.tld
+./ashbox.sh remove domain.tld
+```
+
+> Get the CLI args that make acme.sh work.
+```
+./ashbox.sh conf:acmesh
 ```
 
 > Get the SSL configuration info for Apache configuration.
 ```
-bash ashbox.sh apacheconf domain.tld
+./ashbox.sh conf:apache domain.tld
 ```
+
+
+
+# Information
+
+
+### acme.sh
+
+* acme.sh is installed to the `.ash` directory within ashbox.
+* acme.sh config is stored in the `.cfg` directory within ashbox.
+* acme.sh can be called directly via `.ash/acme.sh`
+
+
+### Certificates
+
+* Certificates are installed to the `certs` directory within ashbox.
