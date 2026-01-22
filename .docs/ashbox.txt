@@ -15,6 +15,10 @@ COMMANDS
 
 		Remove specified certs from the system.
 
+	conf:acmesh
+
+		Print the command line arguments needed to make acme.sh work if choosing to call it directly.
+
 	conf:apache <domain>
 
 		Print the SSL config used by Apache using the $SSLDomain placeholder or a specified domain.

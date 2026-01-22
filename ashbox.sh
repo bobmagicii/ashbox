@@ -10,7 +10,6 @@ ConfDir="$BaseDir/.cfg"
 HelpDir="$BaseDir/.docs"
 CertDir="$BaseDir/certs"
 
-
 RepoURL="https://github.com/acmesh-official/acme.sh"
 
 ################################################################################
