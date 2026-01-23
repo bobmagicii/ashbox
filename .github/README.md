@@ -129,15 +129,9 @@ SSLCACertificateFile  /opt/ashbox/certs/pegasusgate.net_eec/fullchain.cer
 
 # Information
 
-
-### acme.sh
-
-* acme.sh is physically located in the `.ash` directory within ashbox.
-* acme.sh config is stored in the `.cfg` directory within ashbox.
-* acme.sh can be called directly via `.ash/acme.sh`
-* Use `./ashbox.sh conf:acmesh` to get the CLI arguments to use if calling acme.sh directly.
-
-
-### Certificates
-
-* Certificates are installed to the `certs` directory within ashbox.
+```
+If Installed To: /opt/ashbox
+Certs Dir:       /opt/ashbox/certs
+acme.sh Install: /opt/ashbox/.ash
+acme.sh Config:  /opt/ashbox/.cfg
+```
