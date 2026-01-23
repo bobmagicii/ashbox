@@ -16,6 +16,10 @@ COMMANDS
 
 		Remove specified certs from the system.
 
+	update
+
+		Download updates for both ashbox.sh and acme.sh.
+
 	default:letsencrypt
 
 		Set the default cert authority to Lets Encrypt.

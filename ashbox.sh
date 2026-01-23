@@ -20,6 +20,7 @@ ASHBIN="$InstDir/acme.sh"
 ASHCFG="--home $InstDir --cert-home $CertDir --config-home $ConfDir"
 ASHCMD=$1
 ASHARG=${@: 2}
+ASHGIT="git -C $BaseDir"
 
 ################################################################################
 ################################################################################
@@ -33,6 +34,7 @@ source $FuncDir/command-install.sh
 source $FuncDir/command-issue.sh
 source $FuncDir/command-list.sh
 source $FuncDir/command-remove.sh
+source $FuncDir/command-update.sh
 
 ################################################################################
 ################################################################################
@@ -48,6 +50,9 @@ then CommandList $ASHARG
 
 elif [ "$ASHCMD" == 'install' ];
 then CommandInstall $ASHARG
+
+elif [ "$ASHCMD" == 'update' ];
+then CommandUpdate
 
 elif [ "$ASHCMD" == 'default:letsencrypt' ];
 then CommandDefaultLetsEncrypt
