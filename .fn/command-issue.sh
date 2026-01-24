@@ -1,8 +1,8 @@
 
 CommandIssue() {
 
-	Domains=""
-	PArgs=""
+	local Domains=""
+	local PArgs=""
 
 	########
 
@@ -32,6 +32,6 @@ CommandIssue() {
 
 	########
 
-	bash $ASHBIN $ASHCFG --issue $PArgs $Domains
+	bash "$ASHBIN" $ASHCFG --issue $PArgs $Domains
 	exit 0
 }

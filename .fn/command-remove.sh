@@ -1,15 +1,24 @@
 
 CommandRemove() {
 
-	Domains=""
+	local Domain=""
+	local DoClean=0
 
 	########
 
-	for Domain do
-		Domains+="-d $Domain "
+	for Arg;
+	do
+		if [[ $Arg == "--clean" ]];
+		then
+			DoClean=1
+		else
+			Domain=$Arg
+		fi
 	done
 
-	if [[ -z $Domains ]];
+	########
+
+	if [[ -z $Domain ]];
 	then
 		ShowHelpFile ashbox-remove.txt
 		exit 0
@@ -17,7 +26,12 @@ CommandRemove() {
 
 	########
 
-	bash $ASHBIN $ASHCFG --revoke $Domains
-	bash $ASHBIN $ASHCFG --remove $Domains
+	bash "$ASHBIN" $ASHCFG --remove -d $Domain
+
+	if [[ $DoClean -eq 1 ]];
+	then
+		rm -rf "${CertDir}/${Domain}_ecc"
+	fi
+
 	exit 0
 }

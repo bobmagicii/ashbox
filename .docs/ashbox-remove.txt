@@ -1,4 +1,8 @@
-ashbox.sh remove <options> <domain1> ...
-=======================================
+ashbox.sh remove <options> <domain>
+===================================
 
 Remove a specified certificates from the system.
+
+	--clean
+	acme.sh leaves the certs laying around so that they can still be used
+	before expire. Adding this option will remove them now.
