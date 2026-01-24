@@ -123,9 +123,9 @@ $ ./ashbox.sh conf:apache pegasusgate.net
 VHOST SSL CONFIG
 ================
 
-SSLCertificateFile    /opt/ashbox/certs/pegasusgate.net_eec/pegasusgate.net.cer
-SSLCertificateKeyFile /opt/ashbox/certs/pegasusgate.net_eec/pegasusgate.net.key
-SSLCACertificateFile  /opt/ashbox/certs/pegasusgate.net_eec/fullchain.cer
+SSLCertificateFile    /opt/ashbox/certs/pegasusgate.net_ecc/pegasusgate.net.cer
+SSLCertificateKeyFile /opt/ashbox/certs/pegasusgate.net_ecc/pegasusgate.net.key
+SSLCACertificateFile  /opt/ashbox/certs/pegasusgate.net_ecc/fullchain.cer
 ```
 
 
