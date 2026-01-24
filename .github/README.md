@@ -4,9 +4,12 @@ A box to keep and use acme.sh within.
 
 * Installs, configures, and contains a managed acme.sh setup.
 * Centralised portable certificate storage.
+* Raw, CSV, or JSON listing of intalled certs.
 * Generate configuration for misc system and services.
 	* acme.sh CLI Config
 	* Apache 2.4 SSL Config
+	* Gitea SSL Config
+
 
 
 # Requirements
@@ -30,7 +33,7 @@ $ chmod +x ./ashbox.sh
 $ ./ashbox.sh install ssl@my-web-company.tld
 ```
 
-One of the things acme.sh does automatically is add an entry to crontab to handle automatically rewewing certs. That can be verified by checking the output of `crontab -l` - it would be good to edit the crontab to change the time that suits you afterwards with `crontab -e`.
+One of the things acme.sh does is add an entry to crontab to handle automatically rewewing certs. That can be verified by checking the output of `crontab -l` - it would be good to edit the crontab to change the time that suits you afterwards with `crontab -e`.
 
 ```
 $ crontab -l | grep ashbox
@@ -49,7 +52,7 @@ Each of the DNS supported by acme.sh have their variables you set to make their 
 * [DNS Mode Documentation for acme.sh](https://github.com/acmesh-official/acme.sh/wiki/dnsapi)
 
 ```text
-# make --dns dns_porkbun work
+# example: make --dns dns_porkbun work
 
 PORKBUN_API_KEY='...'
 PORKBUN_SECRET_API_KEY='...'
