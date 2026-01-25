@@ -22,6 +22,10 @@ COMMANDS
 
 		Download updates for both ashbox.sh and acme.sh.
 
+	--version
+
+		List ashbox and acme.sh versions.
+
 SET DEFAULTS
 
 	default:letsencrypt - use Let's Encrypt by default.
