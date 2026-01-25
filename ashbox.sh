@@ -88,7 +88,7 @@ then CommandConfigForGitea $ASHARG
 
 elif [ "$ASHCMD" == '--version' ];
 then
-	echo "${Version}"
+	echo "ashbox v${Version} [ acme.sh" $("$ASHBIN" $ASHCFG --version | grep v) "]"
 	exit 0
 fi
 
