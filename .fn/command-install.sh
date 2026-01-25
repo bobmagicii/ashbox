@@ -1,35 +1,43 @@
+################################################################################
+## ashbox.sh install############################################################
 
 CommandInstall() {
 
 	ContactEmail=$1
+	DefaultCertAuth="letsencrypt"
 
 	########
 
-	if [ -z "$ContactEmail" ];
+	if [[ -z $ContactEmail ]];
 	then
 		ShowHelpFile ashbox-install.txt
-		exit 1
+		exit $ERR
 	fi
 
 	########
 
 	# grab the code.
 
-	rm -rf $TempDir
-	git clone $RepoURL $TempDir
+	rm -rf "${TempDir}"
+	git clone "${AcmeShRepoURL}" "${TempDir}"
 
 	# run its installer with the config.
 
-	cd $TempDir
-	bash ./acme.sh $ASHCFG --install -m $ContactEmail
-	bash $ASHBIN $ASHCFG --set-default-ca --server letsencrypt
+	cd "${TempDir}"
+	bash ./acme.sh $ASHCFG --install -m "${ContactEmail}"
+	bash "${ASHBIN}" $ASHCFG --set-default-ca --server "${DefaultCertAuth}"
 
 	# cleanup the install.
 
-	cd $BaseDir
-	rm -rf $TempDir
+	cd "${BaseDir}"
+	rm -rf "${TempDir}"
 
 	########
 
-	exit 0
+	exit $OK
 }
+
+################################################################################
+################################################################################
+
+# ...
