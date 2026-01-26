@@ -3,7 +3,7 @@
 
 function CommandUpdate() {(
 
-	UpdateSelf() {
+	function UpdateSelf() {
 
 		local Command="${ASHGIT} pull"
 
@@ -15,7 +15,7 @@ function CommandUpdate() {(
 		return $OK
 	};
 
-	UpdateASH() {
+	function UpdateASH() {
 
 		local Command="bash ${ASHBIN} ${ASHCFG} --upgrade"
 
@@ -37,4 +37,4 @@ function CommandUpdate() {(
 	################################################################
 
 	exit $KTHXBAI
-)}
+)};

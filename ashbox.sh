@@ -80,7 +80,9 @@ then
 	exit $?
 
 elif [[ $ASHCMD == "install" ]];
-then CommandInstall $ASHARG
+then
+	CommandInstall $ASHARG
+	exit $?
 
 elif [[ $ASHCMD == "update" ]];
 then
