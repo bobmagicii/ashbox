@@ -1,14 +1,14 @@
 
 CommandDefaultLetsEncrypt() {
 
-	bash $ASHBIN $ASHCFG --set-default-ca --server letsencrypt
+	bash "${ASHBIN}" $ASHCFG --set-default-ca --server "letsencrypt"
 
-	exit 0
+	exit $OK
 }
 
 CommandDefaultZeroSSL() {
 
-	bash $ASHBIN $ASHCFG --set-default-ca --server zerossl
+	bash "${ASHBIN}" $ASHCFG --set-default-ca --server "zerossl"
 
-	exit 0
+	exit $OK
 }
