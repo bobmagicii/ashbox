@@ -3,6 +3,7 @@
 
 CommandIssue() {
 
+	local Arg=""
 	local Domains=""
 	local PArgs=""
 
@@ -11,16 +12,16 @@ CommandIssue() {
 	for Arg;
 	do
 		if [[ $Arg =~ \. ]];
-		then Domains+="-d $Arg "
+		then Domains+="-d ${Arg} "
 
 		elif [[ $Arg == "--porkbun" ]];
-		then PArgs+="--dns dns_porkbun"
+		then PArgs+="--dns dns_porkbun "
 
 		elif [[ $Arg == "--digitalocean" ]];
-		then PArgs+="--dns dns_dgon"
+		then PArgs+="--dns dns_dgon "
 
 		else
-			PArgs+="$Arg "
+			PArgs+="${Arg} "
 		fi
 	done
 
@@ -35,9 +36,24 @@ CommandIssue() {
 	########
 
 	PrintH2Ln "Beinning acme.sh Certificate Issuing..."
-
-	bash "${ASHBIN}" $ASHCFG --issue $PArgs $Domains
+	IssueCertAcmeSh "${PArgs}" "${Domains}"
 	echo
 
-	exit 0
+	########
+
+	exit $OK
 }
+
+################################################################################
+################################################################################
+
+IssueCertAcmeSh() {
+
+	local Args=$1
+	local Domains=$2
+
+	bash "${ASHBIN}" $ASHCFG --issue $Args $Domains
+
+	return $OK
+}
+
