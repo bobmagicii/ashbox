@@ -35,6 +35,12 @@ readonly ERR=1
 ################################################################################
 ################################################################################
 
+readonly KTHXBAI=$OK
+readonly OHSNAP=$ERR
+
+################################################################################
+################################################################################
+
 if [[ $InstDir =~ " " ]];
 then
 	echo "acme.sh does not support spaces in paths."
@@ -69,8 +75,9 @@ elif [[ $ASHCMD == "remove" ]];
 then CommandRemove $ASHARG
 
 elif [[ $ASHCMD == "list" ]];
-then CommandList $ASHARG
-
+then
+	CommandList $ASHARG
+	exit $?
 elif [[ $ASHCMD == "install" ]];
 then CommandInstall $ASHARG
 

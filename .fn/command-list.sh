@@ -1,15 +1,153 @@
+################################################################################
+## ashbox.sh list ##############################################################
 
-CommandList() {
+function CommandList() {(
 
-	Format="default"
-	Delim=$'\t'
-	Output=""
+	local Arg=""
+	local Format="default"
+	local Delim=$'\t'
 
-	Lines=()
-	Headers=()
-	Rows=()
+	local Raw=""
+	local Buffer=""
+	local Lines=()
+	local Headers=()
+	local Rows=()
 
-	########
+	################################################################
+	################################################################
+
+	function FetchRawDataAcmeSh() {
+		bash "${ASHBIN}" $ASHCFG --list --listraw
+		return $KTHXBAI
+	}
+
+	function BackfillRawIntoLines() {
+
+		# reference $Raw
+		# backfills $Lines=()
+
+		local IFS=$'\n'
+
+		########
+
+		for Line in $Raw;
+		do
+			Lines+=($Line)
+		done
+
+		########
+
+		return $KTHXBAI
+	}
+
+	function BackfillLinesIntoHeadersRows() {
+
+		# reference $Lines
+		# backfills $Headers=()
+		# backfills $Rows=()
+
+		local Line=""
+		local IFS='|'
+
+		########
+
+		for Line in "${Lines[@]}";
+		do
+			if [[ ${#Headers[@]} -eq 0 ]];
+			then
+				Headers=($Line)
+			else
+				Rows+=("$Line")
+			fi
+		done
+
+		########
+
+		return $KTHXBAI
+	}
+
+	function BackfillRowToBits() {
+
+		# reference $Row
+		# backfills $Row
+
+		local IFS='|'
+
+		Row=${Row//"||"/"|-|"}
+		Row=(${Row[@]})
+
+		return $KTHXBAI
+	}
+
+	function BackpackRowIntoBufferJSON() {
+
+		# reference $Headers
+		# reference $Row
+		# backfills $Buffer
+
+		########
+
+		Buffer+=$'\t'
+		Buffer+="{ "
+		Buffer+="\"${Headers[0]}\": \"${Row[0]}\", "
+		Buffer+="\"${Headers[1]}\": ${Row[1]}, "
+		Buffer+="\"${Headers[2]}\": \"${Row[2]}\", "
+		Buffer+="\"${Headers[3]}\": \"${Row[3]}\", "
+		Buffer+="\"${Headers[4]}\": \"${Row[4]}\", "
+		Buffer+="\"${Headers[5]}\": \"${Row[5]}\", "
+		Buffer+="\"${Headers[6]}\": \"${Row[6]}\" "
+		Buffer+=" },"
+		Buffer+=$'\n'
+
+		########
+
+		return $KTHXBAI
+	}
+
+	function PrintJSON() {
+
+		local Row=""
+		local Buffer=""
+
+		########
+
+		for Row in "${Rows[@]}";
+		do
+			BackfillRowToBits
+			BackpackRowIntoBufferJSON
+		done
+
+		echo '['
+		echo "${Buffer:0:${#Buffer}-2}"
+		echo ']'
+
+		########
+
+		return $KTHXBAI
+	}
+
+	function PrintDelimited() {
+
+		echo $(ArrayJoin "$Delim" ${Headers[@]})
+
+		for Row in "${Rows[@]}";
+		do
+			Row=${Row//"||"/"|-|"}
+			echo $(ArrayJoin "$Delim" ${Row[@]//"|"/" "})
+		done
+
+		return $KTHXBAI
+	}
+
+	function PrintRaw() {
+
+		echo "${Raw}"
+
+		return $KTHXBAI
+	}
+
+	################################################################
+	################################################################
 
 	for Arg;
 	do
@@ -31,72 +169,23 @@ CommandList() {
 		fi
 	done
 
-	## get the data from acme.sh
+	Raw=$(FetchRawDataAcmeSh)
+	BackfillRawIntoLines
+	BackfillLinesIntoHeadersRows
 
-	Output=$(bash $ASHBIN $ASHCFG --list --listraw)
-
-	## break the output by new line.
-
-	IFS=$'\n'
-	for Line in $Output;
-	do Lines+=($Line); done
-	IFS=' '
-
-	## digest the output into structures.
-
-	IFS='|'
-	for Line in "${Lines[@]}";
-	do
-		if [[ ${#Headers[@]} -eq 0 ]];
-		then Headers=($Line);
-		else Rows+=("$Line");
-		fi
-	done
-	IFS=' '
-
-	########
+	################################################################
+	################################################################
 
 	if [[ $Format == 'tsv' ]] || [[ $Format == 'csv' ]] || [[ $Format == 'ssv' ]];
-	then
-		echo $(ArrayJoin "$Delim" ${Headers[@]})
-
-		for Row in "${Rows[@]}";
-		do
-			Row=${Row//"||"/"|-|"}
-			echo $(ArrayJoin "$Delim" ${Row[@]//"|"/" "})
-		done
+	then PrintDelimited
 	elif [[ $Format == 'json' ]];
-	then
-
-		Buffer=""
-
-		for Row in "${Rows[@]}";
-		do
-			Row=${Row//"||"/"|-|"}
-			Row=(${Row[@]//"|"/" "})
-
-			Buffer+="	{ "
-			Buffer+="\"${Headers[0]}\": \"${Row[0]}\", "
-			Buffer+="\"${Headers[1]}\": ${Row[1]}, "
-			Buffer+="\"${Headers[2]}\": \"${Row[2]}\", "
-			Buffer+="\"${Headers[3]}\": \"${Row[3]}\", "
-			Buffer+="\"${Headers[4]}\": \"${Row[4]}\", "
-			Buffer+="\"${Headers[5]}\": \"${Row[5]}\", "
-			Buffer+="\"${Headers[6]}\": \"${Row[6]}\" "
-			Buffer+=" },"
-			Buffer+=$'\n'
-		done
-
-		echo '['
-		echo ${Buffer:0:${#Buffer}-2}
-		echo ']'
-
+	then PrintJSON
 	elif [[ $Format == 'default' ]];
-	then
-		echo $Output
+	then PrintRaw
 	fi
 
-	########
+	################################################################
+	################################################################
 
-	exit 0
-}
+	exit $KTHXBAI
+)}
