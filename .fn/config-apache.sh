@@ -1,5 +1,5 @@
 
-AshboxRegisterCommandFunction "conf:apache" "CommandConfigForApacheConf"
+AshboxCommandRegister "conf:apache" "CommandConfigForApacheConf"
 
 ################################################################################
 ################################################################################

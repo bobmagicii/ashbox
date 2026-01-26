@@ -1,5 +1,5 @@
 
-AshboxRegisterCommandFunction "cli:acmesh" "CommandConfigForAcmeShCLI"
+AshboxCommandRegister "cli:acmesh" "CommandConfigForAcmeShCLI"
 
 ################################################################################
 ################################################################################

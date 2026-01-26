@@ -1,8 +1,8 @@
 ################################################################################
 ## ashbox.sh default: ##########################################################
 
-AshboxRegisterCommandFunction "default:letsencrypt" "CommandDefaultLetsEncrypt"
-AshboxRegisterCommandFunction "default:zerossl" "CommandDefaultZeroSSL"
+AshboxCommandRegister "default:letsencrypt" "CommandDefaultLetsEncrypt"
+AshboxCommandRegister "default:zerossl" "CommandDefaultZeroSSL"
 
 ################################################################################
 ################################################################################

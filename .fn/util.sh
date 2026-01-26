@@ -2,12 +2,12 @@
 ################################################################################
 ## terminal functions ##########################################################
 
-QueryTerminalWidth() {
+function QueryTerminalWidth() {
 	tput cols
 	return $OK
 }
 
-GetTerminalWidth() {
+function GetTerminalWidth() {
 
 	local Width=$(QueryTerminalWidth)
 
@@ -24,7 +24,7 @@ GetTerminalWidth() {
 ################################################################################
 ## string utility ##############################################################
 
-ArrayJoin() {
+function ArrayJoin() {
 
 	local IFS=$1
 
@@ -34,7 +34,7 @@ ArrayJoin() {
 	return $OK
 }
 
-StringRepeat() {
+function StringRepeat() {
 
 	local Char=$1
 	local Num=$2
@@ -49,7 +49,7 @@ StringRepeat() {
 ################################################################################
 ## pretty printing functions ###################################################
 
-PrintH1() {
+function PrintH1() {
 
 	local Msg=$1
 	local Char="/"
@@ -60,7 +60,7 @@ PrintH1() {
 	return $OK
 }
 
-PrintH1Ln() {
+function PrintH1Ln() {
 
 	PrintH1 "$1"
 	echo
@@ -68,7 +68,7 @@ PrintH1Ln() {
 	return $OK
 }
 
-PrintH2() {
+function PrintH2() {
 
 	local Msg=$1
 	local Char="/"
@@ -78,7 +78,7 @@ PrintH2() {
 	return $OK
 }
 
-PrintH2Ln() {
+function PrintH2Ln() {
 
 	PrintH2 "$1"
 	echo
@@ -89,7 +89,7 @@ PrintH2Ln() {
 ################################################################################
 ################################################################################
 
-ShowHelpFile() {
+function ShowHelpFile() {
 	echo
 	cat $HelpDir/$1
 	echo

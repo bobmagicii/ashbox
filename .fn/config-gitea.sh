@@ -1,5 +1,5 @@
 
-AshboxRegisterCommandFunction "conf:gitea" "CommandConfigForGitea"
+AshboxCommandRegister "conf:gitea" "CommandConfigForGitea"
 
 ################################################################################
 ################################################################################

@@ -28,7 +28,6 @@ declare ASHCFG="--home ${InstDir} --cert-home ${CertDir} --config-home ${ConfDir
 declare ASHCMD=$1
 declare ASHARG=${@: 2}
 declare ASHGIT="git -C ${BaseDir}"
-
 declare -A ASHCMDFNC
 
 readonly OK=0
@@ -44,28 +43,41 @@ readonly NAHIDK=-1
 ################################################################################
 ################################################################################
 
-if [[ $InstDir =~ " " ]];
-then
-	echo "acme.sh does not support spaces in paths."
-	echo "There are several issues in it's GitHub issue tracker about it."
-	echo "Most of them are closed with \"don't use spaces\"."
-	exit 1
-fi
+function AshboxCommandRegister() {
 
-################################################################################
-################################################################################
-
-function AshboxRegisterCommandFunction() {
+	# reference $ASHCMDFNC
 
 	local Cmd=$1
 	local Fnc=$2
+
+	########
 
 	ASHCMDFNC[$Cmd]=$Fnc
 
 	return $KTHXBAI
 };
 
-function AshboxLoadScriptsFromDir() {
+function AshboxCommandExecute() {
+
+	# reference $ASHCMDFNC
+	# reference $ASHARG
+
+	local Cmd=$1
+
+	########
+
+	if [[ -v ASHCMDFNC[$Cmd] ]];
+	then
+		${ASHCMDFNC[$Cmd]} $ASHARG
+		exit $?
+	fi
+
+	########
+
+	return $KTHXBAI
+};
+
+function AshboxPluginLoader() {
 
 	local Dir=$1
 	local File=""
@@ -82,16 +94,22 @@ function AshboxLoadScriptsFromDir() {
 	return $KTHXBAI
 };
 
-AshboxLoadScriptsFromDir "${FuncDir}"
-
 ################################################################################
 ################################################################################
 
-if [[ -v ASHCMDFNC[$ASHCMD] ]];
+if [[ $InstDir =~ " " ]];
 then
-	${ASHCMDFNC[$ASHCMD]} $ASHARG
-	exit $?
+	echo "acme.sh does not support spaces in paths."
+	echo "There are several issues in it's GitHub issue tracker about it."
+	echo "Most of them are closed with \"don't use spaces\"."
+	exit 1
 fi
+
+################################################################################
+################################################################################
+
+AshboxPluginLoader "${FuncDir}"
+AshboxCommandExecute "${ASHCMD}"
 
 ################################################################################
 ################################################################################
@@ -99,4 +117,4 @@ fi
 PrintH1 "ashbox v${Version}"
 CommandHelp
 
-exit $NAHIDK;
+exit $KTHXBAI;
