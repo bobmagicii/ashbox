@@ -23,7 +23,7 @@ function CommandList() {(
 
 	function FetchRawDataAcmeSh() {
 
-		bash "${ASHBIN}" $ASHCFG --list --listraw
+		bash "${AcmeShCmd}" $AcmeShCfgFlags --list --listraw
 
 		return $KTHXBAI
 	};

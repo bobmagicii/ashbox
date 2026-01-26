@@ -10,7 +10,7 @@ function CommandUpdate() {(
 
 	function UpdateSelf() {
 
-		local Command="${ASHGIT} pull"
+		local Command="${AshboxGitCmd} pull"
 
 		PrintH2 "Updating ashbox"
 		echo
@@ -22,7 +22,7 @@ function CommandUpdate() {(
 
 	function UpdateASH() {
 
-		local Command="bash ${ASHBIN} ${ASHCFG} --upgrade"
+		local Command="bash ${AcmeShCmd} ${AcmeShCfgFlags} --upgrade"
 
 		PrintH2 "Updating acme.sh"
 		echo

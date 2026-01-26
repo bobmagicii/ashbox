@@ -20,7 +20,7 @@ function CommandRemove() {(
 		local Domain=$1
 
 		echo ">> Removing ${Domain} from acme.sh..."
-		bash "${ASHBIN}" $ASHCFG --remove -d "${Domain}" &>/dev/null
+		bash "${AcmeShCmd}" $AcmeShCfgFlags --remove -d "${Domain}" &>/dev/null
 
 		return $KTHXBAI
 	};
@@ -62,7 +62,7 @@ function CommandRemove() {(
 
 	if [[ $DoClean -eq 1 ]];
 	then
-		CertRemoveFiles "${Domain}" "${CertDir}"
+		CertRemoveFiles "${Domain}" "${AshboxConfig['CertDir']}"
 	fi
 
 	echo

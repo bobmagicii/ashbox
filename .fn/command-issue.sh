@@ -22,7 +22,7 @@ function CommandIssue() {(
 
 		########
 
-		bash "${ASHBIN}" $ASHCFG --issue $Args $Domains
+		bash "${AcmeShCmd}" $AcmeShCfgFlags --issue $Args $Domains
 
 		return $KTHXBAI
 	};

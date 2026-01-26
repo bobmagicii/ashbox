@@ -5,6 +5,6 @@ AshboxCommandRegister "cli:acmesh" "CommandConfigForAcmeShCLI"
 ################################################################################
 
 CommandConfigForAcmeShCLI() {(
-	echo "$ASHCFG"
+	echo "$AcmeShCfgFlags"
 	exit $KTHXBAI
 )};

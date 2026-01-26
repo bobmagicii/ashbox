@@ -91,7 +91,7 @@ function PrintH2Ln() {
 
 function ShowHelpFile() {
 	echo
-	cat $HelpDir/$1
+	cat "${AshboxConfig['HelpDir']}/$1"
 	echo
 
 	return $OK

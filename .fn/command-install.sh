@@ -38,9 +38,9 @@ function CommandInstall() {(
 		echo ">> Setting up acme.sh..."
 
 		cd "${RepoDir}"
-		bash ./acme.sh $ASHCFG --install -m "${Email}" &>/dev/null
-		bash "${ASHBIN}" $ASHCFG --set-default-ca --server "${DefaultCert}" &>/dev/null
-		cd "${BaseDir}"
+		bash ./acme.sh $AcmeShCfgFlags --install -m "${Email}" &>/dev/null
+		bash "${AcmeShCmd}" $AcmeShCfgFlags --set-default-ca --server "${DefaultCert}" &>/dev/null
+		cd "${AshboxRoot}"
 
 		echo "++" $(du -sh "${InstDir}")
 		echo
@@ -54,7 +54,7 @@ function CommandInstall() {(
 
 		########
 
-		cd "${BaseDir}"
+		cd "${AshboxRoot}"
 
 		########
 
@@ -81,9 +81,9 @@ function CommandInstall() {(
 	################################################################
 
 	PrintH2Ln "Installing acme.sh..."
-	FetchAcmeShInstall "${AcmeShRepoURL}" "${TempDir}"
-	SetupAcmeShInstall "${TempDir}" "${ContactEmail}" "${DefaultCertAuth}"
-	CleanupAcmeShInstall "${TempDir}"
+	FetchAcmeShInstall "${AshboxConfig['AcmeShRepoURL']}" "${AshboxConfig['TempDir']}"
+	SetupAcmeShInstall "${AshboxConfig['TempDir']}" "${ContactEmail}" "${DefaultCertAuth}"
+	CleanupAcmeShInstall "${AshboxConfig['TempDir']}"
 
 	################################################################
 	################################################################
