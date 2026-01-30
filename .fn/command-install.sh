@@ -42,7 +42,7 @@ function CommandInstall() {(
 		bash "${AcmeShCmd}" $AcmeShCfgFlags --set-default-ca --server "${DefaultCert}" &>/dev/null
 		cd "${AppRoot}"
 
-		echo "++" $(du -sh "${InstDir}")
+		echo "++" $(du -sh "${Config['InstDir']}")
 		echo
 
 		return $OK
