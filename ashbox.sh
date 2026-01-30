@@ -2,7 +2,7 @@
 ################################################################################
 ## a s h b o x #################################################################
 
-declare    AppBin=$(realpath "$0")
+declare    AppBin=$(realpath "${BASH_SOURCE}")
 declare    AppRoot=$(dirname "${AppBin}")
 declare -r AppVersion="1.0.0-dev"
 
@@ -17,6 +17,7 @@ declare -A Config=(
 	["HelpDir"]="${AppRoot}/.docs"
 	["FuncDir"]="${AppRoot}/.fn"
 	["CertDir"]="${AppRoot}/.certs"
+	["AshboxBinFile"]="ashbox.sh"
 	["AshboxRepoURL"]="https://github.com/bobmagicii/ashbox"
 	["AcmeShBinFile"]="acme.sh"
 	["AcmeShRepoURL"]="https://github.com/acmesh-official/acme.sh"
@@ -30,6 +31,8 @@ function Ashbox() {(
 	declare Cmd=$1
 	declare Args=${@:2}
 	declare -A Commands=()
+
+	declare DoExit=1
 
 	declare AcmeShCmd=""
 	declare AcmeShCfgFlags=""
@@ -50,6 +53,8 @@ function Ashbox() {(
 
 	function Constructor() {
 
+		_ProcessCommandArgs $*
+
 		AcmeShCmd="${Config['InstDir']}/${Config['AcmeShBinFile']}"
 		AcmeShCfgFlags+="--home ${Config['InstDir']} "
 		AcmeShCfgFlags+="--cert-home ${Config['CertDir']} "
@@ -57,6 +62,22 @@ function Ashbox() {(
 
 		return $KTHXBAI
 	};
+
+	function _ProcessCommandArgs() {
+
+		local Arg=""
+
+		########
+
+		#for Arg;
+		#do
+
+		#done
+
+		########
+
+		return $KTHXBAI
+	}
 
 	function _HaltIfPathHasWhitespace() {
 
@@ -135,7 +156,7 @@ function Ashbox() {(
 	################################
 	################################
 
-	Constructor
+	Constructor $*
 	_HaltIfPathHasWhitespace "${Config['InstDir']}"
 	_LoadPluginsFrom "${Config['FuncDir']}"
 	_ExecuteCommand "${Cmd}" "${Args}"
@@ -150,5 +171,14 @@ function Ashbox() {(
 ################################################################################
 ################################################################################
 
+## this should enable both calling it as a command (as intended) as well as
+## using it as a source in another script.
+
 Ashbox $*
-exit $?
+
+if [[ $BASH_SOURCE == $0 ]];
+then
+	exit $?
+else
+	return $?
+fi
