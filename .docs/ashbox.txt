@@ -33,8 +33,23 @@ SET DEFAULTS
 
 CONFIG TOOLS
 
-	conf:acmesh:shell:args - CLI args needed to make acme.sh run.
-	conf:ashbox:shell:path - Shell config to make invoking ashbox easier.
-	conf:apache <domain> - VHost SSL Configuration
-	conf:gitea <domain>  - Gitea SSL Configuration
+	acme.sh Shell
+
+	* conf:acmesh:shell:args
+	  CLI args needed to make acme.sh work within the box.
+
+	Ashbox Shell
+
+	* conf:ashbox:shell:path
+	  Shell script to export Ashbox onto PATH.
+
+	Apache VHost SSL
+
+	* conf:apache:vhost:ssl <domain:optional>
+	  Without domain it will generate using $SSLDomain for VHost config args.
+
+	Gitea SSL Configuration
+
+	* conf:gitea <domain>
+
 
